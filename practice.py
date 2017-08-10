@@ -14,7 +14,6 @@ def get_txt_list():
     for file in file_list:
         if file.endswith('.txt'):
             txt_list.append(file)
-    # print(txt_list)
     return txt_list
 
 
@@ -37,13 +36,13 @@ def translate_it(txt_dict):
     """
     url = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
     key = 'trnsl.1.1.20161025T233221Z.47834a66fd7895d0.a95fd4bfde5c1794fa433453956bd261eae80152'
-    l = '\'' + str(*txt_dict.keys()) + '-ru' + '\''
+    l = str(*txt_dict.keys()) + '-ru'
     print(l)
 
     params = {
         'key': key,
-        'lang': l, #'es-ru', #'ru-en',
-        'text': txt_dict.values(), #text,
+        'lang': l,
+        'text': txt_dict.values(),
     }
     response = requests.get(url, params=params).json()
     return ' '.join(response.get('text', []))
