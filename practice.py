@@ -17,7 +17,7 @@ def get_txt_list():
     return txt_list
 
 
-def translate_it(txt_dict):
+def translate_it(lang, file):
     """
     YANDEX translation plugin
 
@@ -36,13 +36,13 @@ def translate_it(txt_dict):
     """
     url = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
     key = 'trnsl.1.1.20161025T233221Z.47834a66fd7895d0.a95fd4bfde5c1794fa433453956bd261eae80152'
-    l = str(*txt_dict.keys()) + '-ru'
+    l = str(lang) + '-ru'
     print(l)
 
     params = {
         'key': key,
         'lang': l,
-        'text': txt_dict.values(),
+        'text': file,
     }
     response = requests.get(url, params=params).json()
     return ' '.join(response.get('text', []))
@@ -53,8 +53,7 @@ def work_with_file():
     for file in txt_list:
         lang = file[0:2].lower()
         with open(file, encoding='utf-8-sig') as file:
-            txt_dict = dict(zip([lang], file))
-            a = translate_it(txt_dict)
+            a = translate_it(lang, file)
             print(a)
 
 
